@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <script src='/javascripts/app_lib.js'></script>
+    <script src='/javascripts/aws_fun_app.js'></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href='/stylesheets/main.min.css' />
+
+
+</head>
+
+<body ng-app="aws-fun">
+    <h1>
+        <%= title %>
+    </h1>
+    <div ng-controller="MainScreenControl" layout="column" ng-cloak>
+
+        <md-content layout-padding>
+
+            <form name="s3form">
+
+                <div layout="row">
+                    <md-input-container flex="25">
+                        <label>AWS ACCESS KEY</label>
+                        <input required name="accessKey" ng-model="accessKey">
+                        <div ng-messages="s3form.accessKey.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>
+                    </md-input-container>
+
+                </div>
+
+                <div layout="row">
+                    <md-input-container flex="25">
+                        <label>AWS SECRET ACCESS KEY</label>
+                        <input required name="secretAccessKey" ng-model="secretAccessKey">
+                        <div ng-messages="s3form.secretAccessKey.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>
+                    </md-input-container>
+
+
+                </div>
+
+
+                <div>
+                    <md-button class="md-raised md-primary" type="submit" ng-click="autheData()">Authenticate Your Credentials</md-button>
+                </div>
+
+                <!--
+          <div layout="row">
+          <md-button class="md-raised md-primary" ng-click="autheFun()"> Authenticate Your Credentials</md-button>
+          </div>
+          -->
+
+            </form>
+        </md-content>
+
+    </div>
+
+
+
+
+
+
+
+</body>
+
+
+</html>

@@ -36,7 +36,7 @@ router.post('/auth', function(req, res, next) {
     accessKey = req.body.accessToken;
     secretAccessKey = req.body.secretKey;
 
-    console.log("got data from" + process.env.AWS_ACCESS_KEY_ID, process.env.AWS_ACCESS_KEY_ID);
+    // console.log("got data from" + process.env.AWS_ACCESS_KEY_ID, process.env.AWS_ACCESS_KEY_ID);
     console.log("got data from controller", accessKey);
     console.log("got data from controller", secretAccessKey);
 
@@ -49,18 +49,20 @@ router.post('/auth', function(req, res, next) {
         secretAccessKey: req.body.secretKey
 
     });
-    console.log("s3key", s3.accessKeyId);
+    console.log("S3secret", s3.secretAccessKey);
+    console.log("s3keyyy", s3.accessKeyId);
     s3.listBuckets(function(err, data) {
         if (err) {
             console.log("Error", err);
             res.status(500);
             res.send(err);
-
+            return;
         } else {
             res.status(200);
-            res.send(data);
-            console.log("Bucket List", data.Buckets);
-            console.log("nameBucketsssss");
+            res.json(data);
+            return;
+            console.log("Bucket List", data);
+            //console.log("nameBucketsssss");
 
 
 

@@ -47,8 +47,17 @@
                 </div>
 
 
-                <div>
+                <div layout="row" layout-align="center center">
+
+
                     <md-button class="md-raised md-primary" type="submit" ng-click="autheData()">Authenticate Your Credentials</md-button>
+
+
+
+
+                    <md-button class="md-raised md-primary" type="submit" ng-click="getBucketList()">Get Bucket List</md-button>
+                    <md-button class="md-raised md-primary" type="submit" ng-click="createBucket()">Create Bucket</md-button>
+                    <md-button class="md-raised md-primary" type="submit" ng-click="deleteBucket()">Delete Bucket</md-button>
                 </div>
 
                 <!--
@@ -58,16 +67,20 @@
           -->
 
             </form>
+            <md-subheader class="md-no-sticky">Bucket List</md-subheader>
+            <md-list-item ng-repeat="bucket in bucketss" class="noright">
+
+                <p>{{bucket.Name}}</p>
+
+            </md-list-item>
+            </md-list>
+
+
         </md-content>
 
+
+
     </div>
-
-
-
-
-
-
-
 </body>
 
 

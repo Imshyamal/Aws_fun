@@ -1,0 +1,13 @@
+<div layout="row">
+    <md-input-container flex="25">
+        <label>Enter Bucket name</label>
+        <input required name="bucketName" ng-model="bucketName">
+        <div ng-messages="s3form.bucketName.$error">
+            <div ng-message="required">This is required.</div>
+        </div>
+    </md-input-container>
+
+</div>
+<div layout="row">
+    <md-button class="md-raised md-primary" type="submit" ng-click="deleteBucket()">Authenticate Your Credentials</md-button>
+</div>

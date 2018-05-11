@@ -19,6 +19,8 @@
     </h1>
     <div ng-controller="MainScreenControl" layout="column" ng-cloak>
 
+
+
         <md-content layout-padding>
 
             <form name="s3form">
@@ -45,39 +47,26 @@
 
 
                 </div>
-
-
-                <div layout="row" layout-align="center center">
-
-
-                    <md-button class="md-raised md-primary" type="submit" ng-click="autheData()">Authenticate Your Credentials</md-button>
-
-
-
-
-                    <md-button class="md-raised md-primary" type="submit" ng-click="getBucketList()">Get Bucket List</md-button>
-                    <md-button class="md-raised md-primary" type="submit" ng-click="createBucket()">Create Bucket</md-button>
-                    <md-button class="md-raised md-primary" type="submit" ng-click="deleteBucket()">Delete Bucket</md-button>
-                </div>
-
-                <!--
-          <div layout="row">
-          <md-button class="md-raised md-primary" ng-click="autheFun()"> Authenticate Your Credentials</md-button>
-          </div>
-          -->
-
             </form>
-            <md-subheader class="md-no-sticky">Bucket List</md-subheader>
-            <md-list-item ng-repeat="bucket in bucketss" class="noright">
 
-                <p>{{bucket.Name}}</p>
 
-            </md-list-item>
-            </md-list>
 
 
         </md-content>
 
+
+        <div layout="row" layout-align="center center">
+
+
+            <md-button class="md-raised md-primary" type="submit" ng-click="autheData()">Authenticate Your Credentials</md-button>
+            <md-button class="md-raised md-primary" type="submit" ng-click="gotoState('delete-bucket')">Create Bucket</md-button>
+            <md-button class="md-raised md-primary" type="submit" ng-click="gotoState('list-bucket')">Get Buckets List</md-button>
+            <md-button class="md-raised md-primary" type="submit" ng-click="gotoState('delete-bucket')">Delete Bucket</md-button>
+
+        </div>
+
+        <ui-view>
+        </ui-view>
 
 
     </div>

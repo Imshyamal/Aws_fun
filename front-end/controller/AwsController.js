@@ -1,10 +1,23 @@
 angular.module('aws-fun')
 
 
-.controller('MainScreenControl', function($scope, $mdToast, $http) {
+.controller('MainScreenControl', function($scope, $mdToast, $http, $mdDialog, $state) {
     var accessToken = "";
     var secretKeyA = "";
     //  console.log('AWS MainScreenControl');
+
+    $scope.gotoState = function(state) {
+        if (state === 'list-bucket') {
+
+            $state.go(state);
+            return;
+        }
+
+        $state.go(state);
+
+    };
+
+
     $scope.autheData = function() {
 
 
@@ -53,33 +66,65 @@ angular.module('aws-fun')
         );
     }
 
-
+    //==========================Bucket List==========================================//
     //get bucket list button
 
     $scope.getBucketList = function() {
-        var data = {};
-        data.accessToken = $scope.accessKey;
-        data.secretKey = $scope.secretAccessKey;
+            var data = {};
+            data.accessToken = $scope.accessKey;
+            data.secretKey = $scope.secretAccessKey;
 
-        $http.post('/auth', data, null).then(
-            function(data) {
-                console.log(data);
-                $scope.bucketss = data.data.Buckets;
-                console.log("bucket Array" + $scope.bucketss);
-                console.log("Success block");
+            $http.post('/auth', data, null).then(
+                function(data) {
+                    console.log(data);
+                    $scope.bucketss = data.data.Buckets;
+                    console.log("bucket Array" + $scope.bucketss);
+                    console.log("Success block");
 
-            },
-            function(data) {
-                console.log(data);
-                console.log("error block");
+                },
+                function(data) {
+                    console.log(data);
+                    console.log("error block");
 
 
 
-            }
+                }
+            );
+
+
+        }
+        //==============goToBucket() for getting specific bucket in list==================//
+    $scope.goToBucket = function(bucketn, event) {
+        console.log("Got selected bucket from list" + bucketn);
+        $mdDialog.show(
+            $mdDialog.alert()
+            .title('Navigating')
+            .textContent('Bucket ' + bucketn)
+            .ariaLabel('Person inspect demo')
+            .ok('Okay')
+            .targetEvent(event)
         );
-
-
     }
 
+
+
+
+    //=================================Delete Bucket===============================//
+    $scope.deleteBucket = function(bucketn) {
+        $mdDialog.show(
+            $mdDialog.alert()
+            .title('Delete Bucket')
+            .textContent('Are you sure you want to delete ' + bucketn + ' bucket ?')
+            .ariaLabel('Secondary click demo')
+            .ok('Delete')
+
+            .targetEvent(event)
+        );
+
+        console.log("Delete action Controller");
+    };
+
+
+    //===============End======================//
 
 })

@@ -11,7 +11,20 @@ appJ.config(function($stateProvider) {
         .state({
             name: "delete-bucket",
             url: "/delete-bucket",
-            templateUrl: "views/delete.ejs",
+            templateUrl: "/views/delete.ejs",
 
         })
+        .state({
+            name: "create-bucket",
+            url: "/create-bucket",
+            templateUrl: "/views/create-bucket.ejs",
+
+        })
+        .state({
+            name: "auth",
+            url: "/auth",
+            templateUrl: "/views/auth.ejs",
+
+        })
+
 })

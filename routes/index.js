@@ -11,16 +11,7 @@ var secretAccessIDD = "";
 // secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 
 
-
-
-
-
-
-
-
 //});
-
-
 
 
 /* GET home page. */
@@ -51,6 +42,8 @@ router.post('/auth', function(req, res, next) {
     });
     console.log("S3secret", s3.secretAccessKey);
     console.log("s3keyyy", s3.accessKeyId);
+
+
     s3.listBuckets(function(err, data) {
         if (err) {
             console.log("Error", err);
@@ -82,15 +75,108 @@ router.post('/auth', function(req, res, next) {
     */
 })
 
-/*
-router.post('/',function(req, res){
 
-  var acckey = req.body.accessKey;
-  var seckey = req.body.secretAccessKey;
-  console.log(acckey);
+
+//===========Delete Back-end===========================
+
+router.post('/deleteb', function(req, res, next) {
+    console.log('inside Delete Backend');
+
+    //  accessKey = req.body.accessToken;
+    //secretAccessKey = req.body.secretKey;
+
+    console.log("Delete-Backend Got Data from Controller " + accessKey, +secretAccessKey);
+
+    var s3 = new AWS.S3({
+        accessKeyId: req.body.accessToken,
+        secretAccessKey: req.body.secretKey
+
+    });
+
+    var params = {
+        Bucket: req.body.bucketName
+    };
+    console.log(params);
+
+
+    s3.deleteBucket(params, function(err, data) {
+        if (err) {
+            console.log(err, err.stack); // an error occurred
+            res.status(500);
+            res.send(err);
+            return;
+        } else {
+
+            res.status(200);
+            res.json(data);
+            console.log(data); // successful response
+            return;
+        }
+    });
+    console.log("param");
+
+
+
+
+
+
+
 })
 
-*/
+
+
+//==================================================//
+
+//============Create Bucket========================//
+
+router.post('/createBucket', function(req, res, next) {
+    console.log('inside Create Bucket Backend');
+
+
+    var s3 = new AWS.S3({
+        accessKeyId: req.body.accessToken,
+        secretAccessKey: req.body.secretKey
+
+    });
+    console.log(req.body.bucketName);
+    var params = {
+        Bucket: req.body.bucketName
+    };
+
+
+
+    s3.createBucket(params, function(err, data) {
+        if (err) {
+
+            console.log("Error", err);
+            res.status(500);
+            res.send(err);
+            return;
+        } else {
+
+            res.status(200);
+            res.json(data);
+            console.log("Success", data.Location);
+            return;
+
+        }
+    });
+    console.log("param");
+
+
+
+
+
+
+
+})
+
+
+
+
+//=================================================//
+
+
 
 
 module.exports = router;

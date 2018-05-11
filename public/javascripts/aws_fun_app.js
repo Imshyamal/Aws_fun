@@ -11,9 +11,22 @@ appJ.config(function($stateProvider) {
         .state({
             name: "delete-bucket",
             url: "/delete-bucket",
-            templateUrl: "views/delete.ejs",
+            templateUrl: "/views/delete.ejs",
 
         })
+        .state({
+            name: "create-bucket",
+            url: "/create-bucket",
+            templateUrl: "/views/create-bucket.ejs",
+
+        })
+        .state({
+            name: "auth",
+            url: "/auth",
+            templateUrl: "/views/auth.ejs",
+
+        })
+
 })
 
 
@@ -114,15 +127,16 @@ angular.module('aws-fun')
         }
         //==============goToBucket() for getting specific bucket in list==================//
     $scope.goToBucket = function(bucketn, event) {
-        console.log("Got selected bucket from list" + bucketn);
-        $mdDialog.show(
+        console.log("AWSController:Got selected bucket from list" + bucketn);
+
+        /* $mdDialog.show(
             $mdDialog.alert()
             .title('Navigating')
             .textContent('Bucket ' + bucketn)
             .ariaLabel('Person inspect demo')
             .ok('Okay')
             .targetEvent(event)
-        );
+        ); */
     }
 
 
@@ -130,19 +144,87 @@ angular.module('aws-fun')
 
     //=================================Delete Bucket===============================//
     $scope.deleteBucket = function(bucketn) {
-        $mdDialog.show(
+        var tempBucketName = bucketn;
+
+        /*   $mdDialog.show(
             $mdDialog.alert()
             .title('Delete Bucket')
-            .textContent('Are you sure you want to delete ' + bucketn + 'Bucket')
+            .textContent('Are you sure you want to delete ' + bucketn + ' bucket ?')
             .ariaLabel('Secondary click demo')
             .ok('Delete')
-            .targetEvent(event)
+            .targetEvent(todeleteBucket(bucketn))
+        ); */
+
+        console.log("Delete AWSController");
+
+        var data = {};
+        data.accessToken = $scope.accessKey;
+        data.secretKey = $scope.secretAccessKey;
+        data.bucketName = bucketn;
+
+
+        $http.post('/deleteb', data, null).then(
+            function(data) {
+                console.log("delete response success" + data);
+                console.log("bucket Deleted");
+
+
+                showToast("bucket Deleted");
+            },
+            function(data) {
+                console.log("delete response success" + data);
+                console.log("error block");
+                showToast("Something went Wrong!!");
+
+
+
+            }
         );
 
-        console.log("Delete action Controller");
+
     };
 
 
-    //===============End======================//
+
+    //===============Delete-Bucket-End======================//
+
+
+    //===============Create Bucket===========================//
+    $scope.createBucket = function() {
+
+        console.log("Create-Bucket AWSController");
+        console.log($scope.accessKey);
+        console.log($scope.secretAccessKey);
+        console.log($scope.bucketnamee);
+        var data = {};
+        data.accessToken = $scope.accessKey;
+        data.secretKey = $scope.secretAccessKey;
+        data.bucketName = $scope.bucketnamee;
+
+
+        $http.post('/createBucket', data, null).then(
+            function(data) {
+                console.log("Create Bucket response success" + data);
+                console.log("bucket Created");
+
+
+                showToast("bucket Created");
+            },
+            function(data) {
+                console.log("Create Bucketdelete response success" + data);
+                console.log("error block");
+                showToast("Something went Wrong!!");
+
+
+
+            }
+        );
+
+
+    };
+
+
+
+    //=======================================================//
 
 })
